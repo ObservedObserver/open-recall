@@ -14,7 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import RadioCardGroup, { IRadioCardOption } from "@/components/radioCardGroup";
-import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { IImageKey } from "@/constants";
+import { randImageSrc } from "@/utils";
+import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -27,8 +29,11 @@ const periodOptions: IRadioCardOption[] = [
     { label: "180 s", value: 180 },
 ];
 
+const imageSetList: IImageKey[] = [IImageKey.default, IImageKey.animalFace];
+
 export default function PlayPanel() {
     const [choosenPeriod, setChoosenPeriod] = useState<number>(periodOptions[0].value);
+    const [choosenImageSetIndex, setChoosenImageSetIndex] = useState<number>(0);
     const difficultyOptions: IRadioCardOption[] = useMemo(() => {
         return new Array(6).fill(0).map((_, i) => {
             return {
@@ -47,6 +52,18 @@ export default function PlayPanel() {
                 </Link>
                 <h1 className="text-xl font-bold">Play</h1>
                 {/* <div>image set</div> */}
+                <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
+                    <h5 className="text-xs">Image Set</h5>
+                    <div className="flex">
+                        <ChevronLeftIcon className="w-32" onClick={() => {
+                            setChoosenImageSetIndex((choosenImageSetIndex - 1 + imageSetList.length) % imageSetList.length);
+                        }} />
+                        <div className="relative h-64 w-full bg-contain bg-no-repeat bg-center" style={{ backgroundImage: `url(${randImageSrc(imageSetList[choosenImageSetIndex], 0)})`}}></div>
+                        <ChevronRightIcon className="w-32" onClick={() => {
+                            setChoosenImageSetIndex((choosenImageSetIndex + 1) % imageSetList.length);
+                        }} />
+                    </div>
+                </div>
                 <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
                     <h5 className="text-xs">Time limit in seconds</h5>
                     <RadioCardGroup
@@ -68,7 +85,7 @@ export default function PlayPanel() {
                     />
                 </div>
                 <div>
-                    <Link href={{ pathname: "/game/guide", query: { time: choosenPeriod, level: choosenDifficulty } }}>
+                    <Link href={{ pathname: "/game/guide", query: { time: choosenPeriod, level: choosenDifficulty, imageSet: imageSetList[choosenImageSetIndex] } }}>
                         <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg p-2 font-medium my-6">Play</button>
                     </Link>
                 </div>

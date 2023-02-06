@@ -15,13 +15,18 @@
 
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { IGameStat } from "@/interface";
+import { IGameStat, IHistory } from "@/interface";
 import GameResult from "./result";
+import { HISTORY_KEY, IImageKey, IMAGE_PATH } from "@/constants";
 
-const IMAGE_NUMBER = 6;
-
-function randImageSrc() {
-    return `/images/series-0-${Math.round(Math.random() * IMAGE_NUMBER) % IMAGE_NUMBER}.png`;
+function randImageSrc(imgCatKey: string, imgIndex: number) {
+    if (!(imgCatKey in IMAGE_PATH)) {
+        imgCatKey = IImageKey.default;
+    }
+    if (!(imgIndex < IMAGE_PATH[imgCatKey as IImageKey].length)) {
+        imgIndex = Math.round(Math.random() * IMAGE_PATH[imgCatKey as IImageKey].length) % IMAGE_PATH[imgCatKey as IImageKey].length;
+    }
+    return IMAGE_PATH[imgCatKey as IImageKey][imgIndex];
 }
 
 export default function GamePanel() {
@@ -29,8 +34,12 @@ export default function GamePanel() {
     const query = router.query;
     const level = Number(query.level) || 1;
     const time = Number(query.time) || 30;
+    let imageSet: IImageKey = IImageKey.default;
+    if (typeof query.imageSet === 'string' && query.imageSet in IImageKey) {
+        imageSet = query.imageSet as IImageKey;
+    }
     const imgContainer = useRef<HTMLDivElement>(null);
-    const [imageList, setImageList] = useState<string[]>([randImageSrc()]);
+    const [imageList, setImageList] = useState<string[]>([randImageSrc(imageSet, 0)]);
     const [timeLeft, setTimeLeft] = useState(time);
     const soundRef = useRef<{correct: HTMLAudioElement | null; wrong: HTMLAudioElement | undefined}>();
     const [stat, setStat] = useState<IGameStat>({
@@ -103,7 +112,7 @@ export default function GamePanel() {
     const goNextFrame = useCallback(() => {
         setImageList((prev) => {
             const next = [...prev];
-            next.push(randImageSrc());
+            next.push(randImageSrc(imageSet, Math.round(Math.random() * IMAGE_PATH[imageSet].length) % IMAGE_PATH[imageSet].length));
             return next;
         });
         if (imgContainer.current) {
@@ -116,8 +125,29 @@ export default function GamePanel() {
                 iterations: 1
               });
         }
-    }, []);
-    if (timeLeft === 0) {
+    }, [imageSet]);
+
+    const gameOver = timeLeft === 0;
+
+    useEffect(() => {
+        if (gameOver) {
+            const history: IHistory = {
+                stat,
+                time,
+                level,
+                datetime: new Date().getTime()
+            }
+            let historyList: IHistory[] = [];
+            const rawExistedHistory = localStorage.getItem(HISTORY_KEY);
+            if (rawExistedHistory) {
+                historyList = JSON.parse(rawExistedHistory);
+            }
+            historyList.push(history);
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(historyList));
+        }
+    }, [gameOver, stat, level, time])
+
+    if (gameOver) {
         return <GameResult stat={stat} time={time} level={level} />;
     }
     return (

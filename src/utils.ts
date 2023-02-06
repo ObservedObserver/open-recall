@@ -13,16 +13,16 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-export interface IGameStat {
-    match: number;
-    correct: number;
-    totalMatch: number;
-    total: number;
-}
+import { IImageKey, IMAGE_PATH } from "./constants";
 
-export interface IHistory {
-    level: number;
-    stat: IGameStat;
-    time: number;
-    datetime: number;
+export function randImageSrc(imgCatKey: string, imgIndex: number) {
+    if (!(imgCatKey in IMAGE_PATH)) {
+        imgCatKey = IImageKey.default;
+    }
+    if (!(imgIndex < IMAGE_PATH[imgCatKey as IImageKey].length)) {
+        imgIndex =
+            Math.round(Math.random() * IMAGE_PATH[imgCatKey as IImageKey].length) %
+            IMAGE_PATH[imgCatKey as IImageKey].length;
+    }
+    return IMAGE_PATH[imgCatKey as IImageKey][imgIndex];
 }
