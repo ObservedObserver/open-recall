@@ -40,12 +40,12 @@ export default function PlayPanel() {
     const [choosenDifficulty, setChoosenDifficulty] = useState<number>(difficultyOptions[1].value);
 
     return (
-        <div className="text-gray-50 mx-auto container px-8">
+        <div className="text-gray-50 mx-auto container px-4 lg:px-28">
             <div className="relative text-center py-1 my-2">
                 <Link className="absolute left-0" href="/">
                     <ArrowLeftIcon className="w-8" />
                 </Link>
-                <h1 className="text-xl">Play</h1>
+                <h1 className="text-xl font-bold">Play</h1>
                 {/* <div>image set</div> */}
                 <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
                     <h5 className="text-xs">Time limit in seconds</h5>
@@ -69,7 +69,7 @@ export default function PlayPanel() {
                 </div>
                 <div>
                     <Link href={{ pathname: "/game/guide", query: { time: choosenPeriod, level: choosenDifficulty } }}>
-                        <button className="w-full bg-blue-400 rounded-lg p-2 font-medium my-6">Play</button>
+                        <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg p-2 font-medium my-6">Play</button>
                     </Link>
                 </div>
             </div>

@@ -32,7 +32,7 @@ interface GameResultProps {
 export default function GameResult(props: GameResultProps) {
     const { level, time, stat = EMPTY_STAT } = props;
     return (
-        <div className="mx-auto container px-4">
+        <div className="mx-auto container px-4 lg:px-28">
             <div className="text-center my-6">
                 <h1 className="text-2xl font-bold">Good job!</h1>
             </div>

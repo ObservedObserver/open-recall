@@ -14,9 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
-import GameResult from "./result";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { IGameStat } from "@/interface";
+import GameResult from "./result";
 
 const IMAGE_NUMBER = 6;
 
@@ -28,9 +28,11 @@ export default function GamePanel() {
     const router = useRouter();
     const query = router.query;
     const level = Number(query.level) || 1;
-    const time = Number(query.time) || 10;
+    const time = Number(query.time) || 30;
+    const imgContainer = useRef<HTMLDivElement>(null);
     const [imageList, setImageList] = useState<string[]>([randImageSrc()]);
     const [timeLeft, setTimeLeft] = useState(time);
+    const soundRef = useRef<{correct: HTMLAudioElement | null; wrong: HTMLAudioElement | undefined}>();
     const [stat, setStat] = useState<IGameStat>({
         match: 0,
         correct: 0,
@@ -40,10 +42,29 @@ export default function GamePanel() {
     const started = imageList.length > level;
     const currentImage = imageList[imageList.length - 1];
     const targetImage = imageList[imageList.length - level - 1];
+    useEffect(() => {
+        soundRef.current = {
+            correct: new Audio("/correct.wav"),
+            wrong: new Audio("/failure.wav"),
+        };
+    }, [])
     const checkAnswer = useCallback(
         (match: boolean) => {
             if (!started) {
                 return;
+            }
+            const correct = match ? targetImage === currentImage : targetImage !== currentImage;
+            if (soundRef.current) {
+                if (correct && soundRef.current.correct) {
+                    soundRef.current.correct.pause();
+                    soundRef.current.correct.currentTime = 0;
+                    soundRef.current.correct.play();
+                }
+                if (!correct && soundRef.current.wrong) {
+                    soundRef.current.wrong.pause();
+                    soundRef.current.wrong.currentTime = 0;
+                    soundRef.current.wrong.play();
+                }
             }
             setStat((preStat) => {
                 const nextStat = { ...preStat };
@@ -85,13 +106,23 @@ export default function GamePanel() {
             next.push(randImageSrc());
             return next;
         });
+        if (imgContainer.current) {
+            imgContainer.current.animate([
+                { transform: "scaleX(0.85)" },
+                { transform: "scaleX(1)" }
+              ], {
+                duration: 100,
+                easing: "ease-out",
+                iterations: 1
+              });
+        }
     }, []);
     if (timeLeft === 0) {
         return <GameResult stat={stat} time={time} level={level} />;
     }
     return (
         <div
-            className="container mx-auto"
+            className="container mx-auto lg:px-28"
             onClick={() => {
                 if (!started) {
                     goNextFrame();
@@ -103,7 +134,8 @@ export default function GamePanel() {
             </div>
             <div className="flex items-center">
                 <div
-                    className="relative h-96 w-full bg-contain bg-no-repeat bg-center"
+                    ref={imgContainer}
+                    className={`relative h-96 w-full bg-contain bg-no-repeat bg-center`}
                     style={{ backgroundImage: `url(${currentImage})` }}
                 ></div>
             </div>

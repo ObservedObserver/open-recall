@@ -21,7 +21,7 @@ export default function Guide() {
     const level = Number(query.level) || 2;
     return (
         <div
-            className="mx-auto container h-screen p-6 flex flex-col justify-center"
+            className="mx-auto container h-screen px-4 lg:px-28 flex flex-col justify-center"
             onClick={() => {
                 router.push({
                     pathname: "/game",

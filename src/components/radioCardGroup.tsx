@@ -57,7 +57,7 @@ export default function RadioCardGroup(props: RadioCardGroupProps) {
                                         ? "ring-2 ring-offset-2 ring-blue-400"
                                         : "",
                                     checked
-                                        ? "border-blue-400 text-white ring-2 ring-offset-2 ring-sky-40 border-transparent bg-blue-400"
+                                        ? "border-blue-400 text-white ring-2 ring-offset-2 ring-sky-40 border-transparent bg-gradient-to-r from-cyan-500 to-blue-500"
                                         : "border-gray-300 text-gray-200",
                                     "border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1"
                                 )
