@@ -5,4 +5,8 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    'grid-cols-2',
+    'grid-cols-3',
+  ],
 }

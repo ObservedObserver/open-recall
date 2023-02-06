@@ -135,7 +135,7 @@ export default function GamePanel() {
             <div className="flex items-center">
                 <div
                     ref={imgContainer}
-                    className={`relative h-96 w-full bg-contain bg-no-repeat bg-center`}
+                    className="relative h-96 w-full bg-contain bg-no-repeat bg-center"
                     style={{ backgroundImage: `url(${currentImage})` }}
                 ></div>
             </div>
