@@ -19,12 +19,12 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 const periodOptions: IRadioCardOption[] = [
-    { label: "30 s", value: 30, key: "30s" },
-    { label: "60 s", value: 60, key: "60s" },
-    { label: "90 s", value: 90, key: "90s" },
-    { label: "120 s", value: 120, key: "120s" },
-    { label: "150 s", value: 150, key: "150s" },
-    { label: "180 s", value: 180, key: "180s" },
+    { label: "30 s", value: 30 },
+    { label: "60 s", value: 60 },
+    { label: "90 s", value: 90 },
+    { label: "120 s", value: 120 },
+    { label: "150 s", value: 150 },
+    { label: "180 s", value: 180 },
 ];
 
 export default function PlayPanel() {
@@ -34,7 +34,6 @@ export default function PlayPanel() {
             return {
                 label: `${i + 1}`,
                 value: i + 1,
-                key: `${i + 1}`,
             };
         });
     }, []);
@@ -53,7 +52,7 @@ export default function PlayPanel() {
                     <RadioCardGroup
                         options={periodOptions}
                         value={choosenPeriod}
-                        onChange={(key, op) => {
+                        onChange={(v, op) => {
                             setChoosenPeriod(op.value);
                         }}
                     />
@@ -63,7 +62,7 @@ export default function PlayPanel() {
                     <RadioCardGroup
                         options={difficultyOptions}
                         value={choosenDifficulty}
-                        onChange={(key, op) => {
+                        onChange={(v, op) => {
                             setChoosenDifficulty(op.value);
                         }}
                     />

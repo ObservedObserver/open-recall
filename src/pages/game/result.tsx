@@ -13,16 +13,24 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import { IGameStat } from "@/interface";
 import Link from "next/link";
 
+const EMPTY_STAT: IGameStat = {
+    match: 0,
+    correct: 0,
+    totalMatch: 0,
+    total: 0,
+};
+
 interface GameResultProps {
-    stat: { match: number; correct: number; totalMatch: number; total: number };
+    stat: IGameStat;
     level: number;
     time: number;
 }
 // show game result
 export default function GameResult(props: GameResultProps) {
-    const { level, time, stat } = props;
+    const { level, time, stat = EMPTY_STAT } = props;
     return (
         <div className="mx-auto container px-4">
             <div className="text-center my-6">

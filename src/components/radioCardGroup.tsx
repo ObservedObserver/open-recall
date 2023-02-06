@@ -20,7 +20,6 @@ function classNames(...classes: string[]) {
 }
 export interface IRadioCardOption {
     label: string;
-    key: string;
     value: any;
 }
 interface RadioCardGroupProps {
@@ -38,7 +37,7 @@ export default function RadioCardGroup(props: RadioCardGroupProps) {
                 value={selectedOption}
                 onChange={(op: IRadioCardOption) => {
                     if (op) {
-                        onChange(op.key, op);
+                        onChange(op.value, op);
                     }
                 }}
                 className="mt-2"
@@ -50,7 +49,7 @@ export default function RadioCardGroup(props: RadioCardGroupProps) {
                 <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
                     {options.map((option) => (
                         <RadioGroup.Option
-                            key={option.key}
+                            key={option.value}
                             value={option}
                             className={({ active, checked }) =>
                                 classNames(

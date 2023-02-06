@@ -19,7 +19,6 @@ export default function Guide() {
     const router = useRouter();
     const query = router.query;
     const level = Number(query.level) || 2;
-    // const time = Number(query.time) || 10;
     return (
         <div
             className="mx-auto container h-screen p-6 flex flex-col justify-center"

@@ -16,6 +16,7 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import GameResult from "./result";
+import { IGameStat } from "@/interface";
 
 const IMAGE_NUMBER = 6;
 
@@ -23,10 +24,6 @@ function randImageSrc() {
     return `/images/series-0-${Math.round(Math.random() * IMAGE_NUMBER) % IMAGE_NUMBER}.png`;
 }
 
-interface IGamePanelProps {
-    level: number;
-    time: number;
-}
 export default function GamePanel() {
     const router = useRouter();
     const query = router.query;
@@ -34,7 +31,7 @@ export default function GamePanel() {
     const time = Number(query.time) || 10;
     const [imageList, setImageList] = useState<string[]>([randImageSrc()]);
     const [timeLeft, setTimeLeft] = useState(time);
-    const [stat, setStat] = useState<{ match: number; correct: number; totalMatch: number; total: number }>({
+    const [stat, setStat] = useState<IGameStat>({
         match: 0,
         correct: 0,
         totalMatch: 0,
