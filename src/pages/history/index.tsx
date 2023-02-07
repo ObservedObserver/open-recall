@@ -54,7 +54,7 @@ export default function History() {
                     name="description"
                     content="Open Recall is an open-source memory training game that is designed to improve working memory and cognitive abilities."
                 />
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,  user-scalable=no" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="mx-auto container px-4 lg:px-28 relative">
