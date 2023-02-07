@@ -16,27 +16,39 @@
 export const HISTORY_KEY = "open_call_history";
 
 export enum IImageKey {
-    default = "default",
+    sport = "sport",
     animalFace = "animalFace",
+    food = "food",
 }
 
 export const IMAGE_PATH: { [key in IImageKey]: string[] } = {
-    [IImageKey.default]: [
-        "/default/series-0-0.png",
-        "/default/series-0-1.png",
-        "/default/series-0-2.png",
-        "/default/series-0-3.png",
-        "/default/series-0-4.png",
-        "/default/series-0-5.png",
+    [IImageKey.sport]: [
+        "/sport/sport_american_football.png",
+        "/sport/baseball_ball.png",
+        "/sport/sport_tennis_ball.png",
+        "/sport/soccer_ball.png",
+        "/sport/sports_badminton_shuttle.png",
+        "/sport/sports_ball_amefuto.png",
+        "/sport/sport_basketball.png",
+        "/sport/tabletennis_racket.png",
     ],
     [IImageKey.animalFace]: [
+        "/animals/animalface_niwatori.png",
+        "/animals/animalface_duck.png",
         "/animals/animalface_cheetah.png",
         "/animals/animalface_panda.png",
         "/animals/animalface_usagi.png",
-        "/animals/animalface_duck.png",
         "/animals/animalface_tora.png",
         "/animals/animalface_zou.png",
-        "/animals/animalface_niwatori.png",
         "/animals/animalface_uma.png",
+    ],
+    [IImageKey.food]: [
+        "/food/food_curry_rice_blue.png",
+        "/food/food_tama_konnyaku_kushi.png",
+        "/food/food_ebi_fry_set.png",
+        "/food/food_perimeni.png",
+        "/food/food_udon_goboten.png",
+        "/food/food_pi-tan_tofu.png",
+        "/food/niku_manga.png",
     ],
 };

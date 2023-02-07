@@ -21,7 +21,7 @@ import { HISTORY_KEY, IImageKey, IMAGE_PATH } from "@/constants";
 
 function randImageSrc(imgCatKey: string, imgIndex: number) {
     if (!(imgCatKey in IMAGE_PATH)) {
-        imgCatKey = IImageKey.default;
+        imgCatKey = IImageKey.sport
     }
     if (!(imgIndex < IMAGE_PATH[imgCatKey as IImageKey].length)) {
         imgIndex = Math.round(Math.random() * IMAGE_PATH[imgCatKey as IImageKey].length) % IMAGE_PATH[imgCatKey as IImageKey].length;
@@ -34,7 +34,7 @@ export default function GamePanel() {
     const query = router.query;
     const level = Number(query.level) || 1;
     const time = Number(query.time) || 30;
-    let imageSet: IImageKey = IImageKey.default;
+    let imageSet: IImageKey = IImageKey.sport
     if (typeof query.imageSet === 'string' && query.imageSet in IImageKey) {
         imageSet = query.imageSet as IImageKey;
     }

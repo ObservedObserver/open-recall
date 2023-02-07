@@ -17,7 +17,7 @@ import { HISTORY_KEY } from "@/constants";
 import { IHistory } from "@/interface";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 function dateFormatter(timeStamp: number): string {
     const date = new Date(timeStamp);
@@ -37,7 +37,13 @@ export default function History() {
         if (!history) {
             return;
         }
-        setHistoryList(JSON.parse(history));
+        try {
+            let hl = JSON.parse(history);
+            hl = hl.sort((a: IHistory, b: IHistory) => b.datetime - a.datetime);
+            setHistoryList(hl);   
+        } catch (error) {
+            setHistoryList([])
+        }
     }, []);
     return (
         <div className="mx-auto container px-4 lg:px-28 relative">

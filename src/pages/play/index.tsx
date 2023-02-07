@@ -29,7 +29,7 @@ const periodOptions: IRadioCardOption[] = [
     { label: "180 s", value: 180 },
 ];
 
-const imageSetList: IImageKey[] = [IImageKey.default, IImageKey.animalFace];
+const imageSetList: IImageKey[] = [IImageKey.animalFace, IImageKey.food, IImageKey.sport];
 
 export default function PlayPanel() {
     const [choosenPeriod, setChoosenPeriod] = useState<number>(periodOptions[0].value);

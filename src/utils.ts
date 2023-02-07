@@ -17,7 +17,7 @@ import { IImageKey, IMAGE_PATH } from "./constants";
 
 export function randImageSrc(imgCatKey: string, imgIndex: number) {
     if (!(imgCatKey in IMAGE_PATH)) {
-        imgCatKey = IImageKey.default;
+        imgCatKey = IImageKey.sport
     }
     if (!(imgIndex < IMAGE_PATH[imgCatKey as IImageKey].length)) {
         imgIndex =
