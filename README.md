@@ -3,7 +3,7 @@
 
 # Open Recall
 
-Open Recall an Open Source N-Back Task Game like Simply-Recall designed to improve working memory and cognitive abilities.
+Open Recall is an Open Source N-Back Task Game like Simply-Recall designed to improve working memory and cognitive abilities.
 
 > Research shows that N-Back training may lead to gains in fluid intelligence (IQ) and working memory ability (Soveri et al., 2017).
 
