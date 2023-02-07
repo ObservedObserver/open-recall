@@ -15,8 +15,8 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="mx-auto container lg:px-28">
-                <h1 className="text-center mt-12 text-3xl lg:text-5xl font-extrabold bg-clip-text">Open <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Recall</span></h1>
+            <main className="mx-auto container px-6 lg:px-28">
+                <h1 className="text-center mt-24 text-4xl lg:text-5xl font-extrabold bg-clip-text">Open <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Recall</span></h1>
                 <h2 className="text-center text-xs lg:text-base font-light mt-4">Open Recall(based on N-Back Task) is a memory training game that is designed to improve working memory and cognitive abilities.</h2>
                 <div className="flex items-center justify-center mt-12 p-2">
                     <Link href="/play">

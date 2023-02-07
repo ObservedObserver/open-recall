@@ -9,3 +9,44 @@ The N-Back task is a memory training game that is designed to improve working me
 ## Play it
 
 You can play the game at [Open Recall On Vercel](https://open-recall.vercel.app/)
+
+## Game
+
++ step 1: click `start` button.
++ step 2: set game time limit and level, and click `play` button.
++ step 3: enjoy the game.
+
+> When Level = 2, you need to remember the previous two items. Suppose we have a list: Apple (n - 2), Banana (n - 1), Apple (n). Click yes because the current item is the same as the item two steps back.
+
+
+<table>
+    <tr>
+        <th>Home</th>
+        <th>Setting</th>
+        <th>Guide</th>
+    </tr>
+    <tr>
+        <td><img src="https://ch-open-sharing.oss-us-west-1.aliyuncs.com/open-recall/open-recall-home.png" /></td>
+        <td><img src="https://ch-open-sharing.oss-us-west-1.aliyuncs.com/open-recall/open-recall-play.png" /></td>
+        <td><img src="https://ch-open-sharing.oss-us-west-1.aliyuncs.com/open-recall/open-recall-desc.png" /></td>
+    </tr>
+    <tr>
+        <th>Playing</th>
+        <th>Score</th>
+        <th>History</th>
+    </tr>
+    <tr>
+        <td><img src="https://ch-open-sharing.oss-us-west-1.aliyuncs.com/open-recall/open-recall-game.png" /></td>
+        <td><img src="https://ch-open-sharing.oss-us-west-1.aliyuncs.com/open-recall/open-recall-result.png" /></td>
+        <td><img src="https://ch-open-sharing.oss-us-west-1.aliyuncs.com/open-recall/recall-history.png" /></td>
+    </tr>
+
+</table>
+
+
+## Deploy
+
+```bash
+npm install
+npm run build
+```

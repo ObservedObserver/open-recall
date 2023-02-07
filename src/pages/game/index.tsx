@@ -162,17 +162,17 @@ export default function GamePanel() {
             <div className="bg-gray-600 py-4 text-center">
                 <div className="text-xs font-light"><span className="text-lg font-bold">{timeLeft}</span> seconds left.</div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center p-4">
                 <div
                     ref={imgContainer}
                     className="relative h-96 w-full bg-contain bg-no-repeat bg-center"
                     style={{ backgroundImage: `url(${currentImage})` }}
                 ></div>
             </div>
-            <p className="text-center">{started ? `Does this symbol match the first of the last ${level} symbols you were shown?` : 'Remeber symbols.'}</p>
+            <p className="text-center m-4">{started ? `Does this symbol match the first of the last ${level} symbols you were shown?` : 'Remeber symbols.'}</p>
 
             {started && (
-                <div className="flex items-center space-around">
+                <div className="flex items-center space-around px-4">
                     <button
                         className="w-full bg-blue-400 rounded-lg p-6 font-medium my-6 mx-2"
                         onClick={() => {
