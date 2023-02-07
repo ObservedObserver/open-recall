@@ -56,8 +56,8 @@ export default function GamePanel() {
     const targetImage = imageList[imageList.length - level - 1];
     useEffect(() => {
         soundRef.current = {
-            correct: new Audio("/correct.wav"),
-            wrong: new Audio("/failure.wav"),
+            correct: new Audio("/correct.mp3"),
+            wrong: new Audio("/failure.mp3"),
         };
     }, []);
     const checkAnswer = useCallback(
@@ -151,7 +151,7 @@ export default function GamePanel() {
             localStorage.setItem(HISTORY_KEY, JSON.stringify(historyList));
         }
     }, [gameOver, stat, level, time]);
-    
+
     return (
         <>
             <Head>
