@@ -14,33 +14,47 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function Guide() {
     const router = useRouter();
     const query = router.query;
     const level = Number(query.level) || 2;
     return (
-        <div
-            className="mx-auto container h-screen px-4 lg:px-28 flex flex-col justify-center"
-            onClick={() => {
-                router.push({
-                    pathname: "/game",
-                    query: { ...router.query },
-                });
-            }}
-        >
-            <div className="bg-gray-600 p-4 rounded-lg">
-                <div className={`grid grid-cols-${level > 1 ? 3 : 2} divide-x-2 border-white border-2 border-white`}>
-                    <div className="p-4 text-center col-span-1">A(n)</div>
-                    {level > 1 && <div className="p-4 text-center col-span-1">...</div>}
-                    <div className="p-4 text-center col-span-1">A(n + {level})</div>
+        <>
+            <Head>
+                <title>Open Recall</title>
+                <meta
+                    name="description"
+                    content="Open Recall is an open-source memory training game that is designed to improve working memory and cognitive abilities."
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main
+                className="mx-auto container h-screen px-4 lg:px-28 flex flex-col justify-center"
+                onClick={() => {
+                    router.push({
+                        pathname: "/game",
+                        query: { ...router.query },
+                    });
+                }}
+            >
+                <div className="bg-gray-600 p-4 rounded-lg">
+                    <div
+                        className={`grid grid-cols-${level > 1 ? 3 : 2} divide-x-2 border-white border-2 border-white`}
+                    >
+                        <div className="p-4 text-center col-span-1">A(n)</div>
+                        {level > 1 && <div className="p-4 text-center col-span-1">...</div>}
+                        <div className="p-4 text-center col-span-1">A(n + {level})</div>
+                    </div>
+                    <p className="my-6 text-center text-sm font-light">
+                        Recall and match the <b className="font-bold text-base">N-Back (N = {level}) to last</b> symbol
+                        while avoiding mistakes.
+                    </p>
+                    <h3 className="text-center">Tap to begin.</h3>
                 </div>
-                <p className="my-6 text-center text-sm font-light">
-                    Recall and match the <b className="font-bold text-base">N-Back (N = {level}) to last</b> symbol
-                    while avoiding mistakes.
-                </p>
-                <h3 className="text-center">Tap to begin.</h3>
-            </div>
-        </div>
+            </main>
+        </>
     );
 }

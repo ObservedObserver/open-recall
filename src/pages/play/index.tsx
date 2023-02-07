@@ -17,6 +17,7 @@ import RadioCardGroup, { IRadioCardOption } from "@/components/radioCardGroup";
 import { IImageKey } from "@/constants";
 import { randImageSrc } from "@/utils";
 import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import Head from "next/head";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -45,51 +46,86 @@ export default function PlayPanel() {
     const [choosenDifficulty, setChoosenDifficulty] = useState<number>(difficultyOptions[1].value);
 
     return (
-        <div className="text-gray-50 mx-auto container px-4 lg:px-28">
-            <div className="relative text-center py-1 my-2">
-                <Link className="absolute left-0" href="/">
-                    <ArrowLeftIcon className="w-8" />
-                </Link>
-                <h1 className="text-xl font-bold">Play</h1>
-                {/* <div>image set</div> */}
-                <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
-                    <h5 className="text-xs">Image Set</h5>
-                    <div className="flex">
-                        <ChevronLeftIcon className="w-32" onClick={() => {
-                            setChoosenImageSetIndex((choosenImageSetIndex - 1 + imageSetList.length) % imageSetList.length);
-                        }} />
-                        <div className="relative h-64 w-full bg-contain bg-no-repeat bg-center" style={{ backgroundImage: `url(${randImageSrc(imageSetList[choosenImageSetIndex], 0)})`}}></div>
-                        <ChevronRightIcon className="w-32" onClick={() => {
-                            setChoosenImageSetIndex((choosenImageSetIndex + 1) % imageSetList.length);
-                        }} />
+        <>
+            <Head>
+                <title>Open Recall</title>
+                <meta
+                    name="description"
+                    content="Open Recall is an open-source memory training game that is designed to improve working memory and cognitive abilities."
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main className="text-gray-50 mx-auto container px-4 lg:px-28">
+                <div className="relative text-center py-1 my-2">
+                    <Link className="absolute left-0" href="/">
+                        <ArrowLeftIcon className="w-8" />
+                    </Link>
+                    <h1 className="text-xl font-bold">Play</h1>
+                    {/* <div>image set</div> */}
+                    <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
+                        <h5 className="text-xs">Image Set</h5>
+                        <div className="flex">
+                            <ChevronLeftIcon
+                                className="w-32"
+                                onClick={() => {
+                                    setChoosenImageSetIndex(
+                                        (choosenImageSetIndex - 1 + imageSetList.length) % imageSetList.length
+                                    );
+                                }}
+                            />
+                            <div
+                                className="relative h-64 w-full bg-contain bg-no-repeat bg-center"
+                                style={{
+                                    backgroundImage: `url(${randImageSrc(imageSetList[choosenImageSetIndex], 0)})`,
+                                }}
+                            ></div>
+                            <ChevronRightIcon
+                                className="w-32"
+                                onClick={() => {
+                                    setChoosenImageSetIndex((choosenImageSetIndex + 1) % imageSetList.length);
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
+                        <h5 className="text-xs">Time limit in seconds</h5>
+                        <RadioCardGroup
+                            options={periodOptions}
+                            value={choosenPeriod}
+                            onChange={(v, op) => {
+                                setChoosenPeriod(op.value);
+                            }}
+                        />
+                    </div>
+                    <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
+                        <h5 className="text-xs">Difficulty</h5>
+                        <RadioCardGroup
+                            options={difficultyOptions}
+                            value={choosenDifficulty}
+                            onChange={(v, op) => {
+                                setChoosenDifficulty(op.value);
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <Link
+                            href={{
+                                pathname: "/game/guide",
+                                query: {
+                                    time: choosenPeriod,
+                                    level: choosenDifficulty,
+                                    imageSet: imageSetList[choosenImageSetIndex],
+                                },
+                            }}
+                        >
+                            <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg p-2 font-medium my-6">
+                                Play
+                            </button>
+                        </Link>
                     </div>
                 </div>
-                <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
-                    <h5 className="text-xs">Time limit in seconds</h5>
-                    <RadioCardGroup
-                        options={periodOptions}
-                        value={choosenPeriod}
-                        onChange={(v, op) => {
-                            setChoosenPeriod(op.value);
-                        }}
-                    />
-                </div>
-                <div className="bg-gray-600 rounded-lg p-2 font-light my-6">
-                    <h5 className="text-xs">Difficulty</h5>
-                    <RadioCardGroup
-                        options={difficultyOptions}
-                        value={choosenDifficulty}
-                        onChange={(v, op) => {
-                            setChoosenDifficulty(op.value);
-                        }}
-                    />
-                </div>
-                <div>
-                    <Link href={{ pathname: "/game/guide", query: { time: choosenPeriod, level: choosenDifficulty, imageSet: imageSetList[choosenImageSetIndex] } }}>
-                        <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg p-2 font-medium my-6">Play</button>
-                    </Link>
-                </div>
-            </div>
-        </div>
+            </main>
+        </>
     );
 }

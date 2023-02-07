@@ -16,15 +16,18 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IGameStat, IHistory } from "@/interface";
-import GameResult from "./result";
 import { HISTORY_KEY, IImageKey, IMAGE_PATH } from "@/constants";
+import Head from "next/head";
+import GameResult from "./result";
 
 function randImageSrc(imgCatKey: string, imgIndex: number) {
     if (!(imgCatKey in IMAGE_PATH)) {
-        imgCatKey = IImageKey.sport
+        imgCatKey = IImageKey.sport;
     }
     if (!(imgIndex < IMAGE_PATH[imgCatKey as IImageKey].length)) {
-        imgIndex = Math.round(Math.random() * IMAGE_PATH[imgCatKey as IImageKey].length) % IMAGE_PATH[imgCatKey as IImageKey].length;
+        imgIndex =
+            Math.round(Math.random() * IMAGE_PATH[imgCatKey as IImageKey].length) %
+            IMAGE_PATH[imgCatKey as IImageKey].length;
     }
     return IMAGE_PATH[imgCatKey as IImageKey][imgIndex];
 }
@@ -34,14 +37,14 @@ export default function GamePanel() {
     const query = router.query;
     const level = Number(query.level) || 1;
     const time = Number(query.time) || 30;
-    let imageSet: IImageKey = IImageKey.sport
-    if (typeof query.imageSet === 'string' && query.imageSet in IImageKey) {
+    let imageSet: IImageKey = IImageKey.sport;
+    if (typeof query.imageSet === "string" && query.imageSet in IImageKey) {
         imageSet = query.imageSet as IImageKey;
     }
     const imgContainer = useRef<HTMLDivElement>(null);
     const [imageList, setImageList] = useState<string[]>([randImageSrc(imageSet, 0)]);
     const [timeLeft, setTimeLeft] = useState(time);
-    const soundRef = useRef<{correct: HTMLAudioElement | null; wrong: HTMLAudioElement | undefined}>();
+    const soundRef = useRef<{ correct: HTMLAudioElement | null; wrong: HTMLAudioElement | undefined }>();
     const [stat, setStat] = useState<IGameStat>({
         match: 0,
         correct: 0,
@@ -56,7 +59,7 @@ export default function GamePanel() {
             correct: new Audio("/correct.wav"),
             wrong: new Audio("/failure.wav"),
         };
-    }, [])
+    }, []);
     const checkAnswer = useCallback(
         (match: boolean) => {
             if (!started) {
@@ -112,18 +115,20 @@ export default function GamePanel() {
     const goNextFrame = useCallback(() => {
         setImageList((prev) => {
             const next = [...prev];
-            next.push(randImageSrc(imageSet, Math.round(Math.random() * IMAGE_PATH[imageSet].length) % IMAGE_PATH[imageSet].length));
+            next.push(
+                randImageSrc(
+                    imageSet,
+                    Math.round(Math.random() * IMAGE_PATH[imageSet].length) % IMAGE_PATH[imageSet].length
+                )
+            );
             return next;
         });
         if (imgContainer.current) {
-            imgContainer.current.animate([
-                { transform: "scaleX(0.85)" },
-                { transform: "scaleX(1)" }
-              ], {
+            imgContainer.current.animate([{ transform: "scaleX(0.85)" }, { transform: "scaleX(1)" }], {
                 duration: 100,
                 easing: "ease-out",
-                iterations: 1
-              });
+                iterations: 1,
+            });
         }
     }, [imageSet]);
 
@@ -135,8 +140,8 @@ export default function GamePanel() {
                 stat,
                 time,
                 level,
-                datetime: new Date().getTime()
-            }
+                datetime: new Date().getTime(),
+            };
             let historyList: IHistory[] = [];
             const rawExistedHistory = localStorage.getItem(HISTORY_KEY);
             if (rawExistedHistory) {
@@ -145,54 +150,71 @@ export default function GamePanel() {
             historyList.push(history);
             localStorage.setItem(HISTORY_KEY, JSON.stringify(historyList));
         }
-    }, [gameOver, stat, level, time])
-
-    if (gameOver) {
-        return <GameResult stat={stat} time={time} level={level} />;
-    }
+    }, [gameOver, stat, level, time]);
+    
     return (
-        <div
-            className="container mx-auto lg:px-28"
-            onClick={() => {
-                if (!started) {
-                    goNextFrame();
-                }
-            }}
-        >
-            <div className="bg-gray-600 py-4 text-center">
-                <div className="text-xs font-light"><span className="text-lg font-bold">{timeLeft}</span> seconds left.</div>
-            </div>
-            <div className="flex items-center p-4">
-                <div
-                    ref={imgContainer}
-                    className="relative h-96 w-full bg-contain bg-no-repeat bg-center"
-                    style={{ backgroundImage: `url(${currentImage})` }}
-                ></div>
-            </div>
-            <p className="text-center m-4">{started ? `Does this symbol match the first of the last ${level} symbols you were shown?` : 'Remeber symbols.'}</p>
+        <>
+            <Head>
+                <title>Open Recall</title>
+                <meta
+                    name="description"
+                    content="Open Recall is an open-source memory training game that is designed to improve working memory and cognitive abilities."
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            {gameOver && <GameResult stat={stat} time={time} level={level} />}
+            {!gameOver && (
+                <main
+                    className="container mx-auto lg:px-28"
+                    onClick={() => {
+                        if (!started) {
+                            goNextFrame();
+                        }
+                    }}
+                >
+                    <div className="bg-gray-600 py-4 text-center">
+                        <div className="text-xs font-light">
+                            <span className="text-lg font-bold">{timeLeft}</span> seconds left.
+                        </div>
+                    </div>
+                    <div className="flex items-center p-4">
+                        <div
+                            ref={imgContainer}
+                            className="relative h-96 w-full bg-contain bg-no-repeat bg-center"
+                            style={{ backgroundImage: `url(${currentImage})` }}
+                        ></div>
+                    </div>
+                    <p className="text-center m-4">
+                        {started
+                            ? `Does this symbol match the first of the last ${level} symbols you were shown?`
+                            : "Remeber symbols."}
+                    </p>
 
-            {started && (
-                <div className="flex items-center space-around px-4">
-                    <button
-                        className="w-full bg-blue-400 rounded-lg p-6 font-medium my-6 mx-2"
-                        onClick={() => {
-                            checkAnswer(true);
-                            goNextFrame();
-                        }}
-                    >
-                        Yes
-                    </button>
-                    <button
-                        className="w-full border-2 border-blue-400 rounded-lg p-6 font-medium my-6 mx-2"
-                        onClick={() => {
-                            checkAnswer(false);
-                            goNextFrame();
-                        }}
-                    >
-                        No
-                    </button>
-                </div>
+                    {started && (
+                        <div className="flex items-center space-around px-4">
+                            <button
+                                className="w-full bg-blue-400 rounded-lg p-6 font-medium my-6 mx-2"
+                                onClick={() => {
+                                    checkAnswer(true);
+                                    goNextFrame();
+                                }}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                className="w-full border-2 border-blue-400 rounded-lg p-6 font-medium my-6 mx-2"
+                                onClick={() => {
+                                    checkAnswer(false);
+                                    goNextFrame();
+                                }}
+                            >
+                                No
+                            </button>
+                        </div>
+                    )}
+                </main>
             )}
-        </div>
+        </>
     );
 }

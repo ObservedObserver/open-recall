@@ -16,6 +16,7 @@
 import { HISTORY_KEY } from "@/constants";
 import { IHistory } from "@/interface";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -40,33 +41,44 @@ export default function History() {
         try {
             let hl = JSON.parse(history);
             hl = hl.sort((a: IHistory, b: IHistory) => b.datetime - a.datetime);
-            setHistoryList(hl);   
+            setHistoryList(hl);
         } catch (error) {
-            setHistoryList([])
+            setHistoryList([]);
         }
     }, []);
     return (
-        <div className="mx-auto container px-4 lg:px-28 relative">
-            <Link className="absolute left-0" href="/">
-                <ArrowLeftIcon className="w-8" />
-            </Link>
-            <h1 className="text-2xl font-bold text-center mt-6">History</h1>
-            {historyList.map((history, index) => (
-                <div
-                    className="text-xs lg:text-base bg-gray-600 rounded-lg p-4 m-4 grid grid-cols-4 lg:grid-cols-5 lg:divide-x"
-                    key={index}
-                >
-                    <div className="pb-2 lg:pb-0 font-bold lg:font-base lg:mb-0 lg:text-center col-span-4 lg:col-span-1">
-                        {dateFormatter(history.datetime)}
+        <>
+            <Head>
+                <title>Open Recall</title>
+                <meta
+                    name="description"
+                    content="Open Recall is an open-source memory training game that is designed to improve working memory and cognitive abilities."
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main className="mx-auto container px-4 lg:px-28 relative">
+                <Link className="absolute left-0" href="/">
+                    <ArrowLeftIcon className="w-8" />
+                </Link>
+                <h1 className="text-2xl font-bold text-center mt-6">History</h1>
+                {historyList.map((history, index) => (
+                    <div
+                        className="text-xs lg:text-base bg-gray-600 rounded-lg p-4 m-4 grid grid-cols-4 lg:grid-cols-5 lg:divide-x"
+                        key={index}
+                    >
+                        <div className="pb-2 lg:pb-0 font-bold lg:font-base lg:mb-0 lg:text-center col-span-4 lg:col-span-1">
+                            {dateFormatter(history.datetime)}
+                        </div>
+                        <div className="lg:text-center">Level {history.level}</div>
+                        <div className="lg:text-center">{history.time} s</div>
+                        <div className="lg:text-center">
+                            {Math.round((history.stat.correct / history.stat.total) * 100)} %
+                        </div>
+                        <div className="lg:text-center">{history.stat.match} Matches</div>
                     </div>
-                    <div className="lg:text-center">Level {history.level}</div>
-                    <div className="lg:text-center">{history.time} s</div>
-                    <div className="lg:text-center">
-                        {Math.round((history.stat.correct / history.stat.total) * 100)} %
-                    </div>
-                    <div className="lg:text-center">{history.stat.match} Matches</div>
-                </div>
-            ))}
-        </div>
+                ))}
+            </main>
+        </>
     );
 }
