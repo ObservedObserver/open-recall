@@ -1,6 +1,6 @@
 # Open Recall
 
-This is an Open Source alternative to the Simply-Recall or other N-Back Task Games designed to improve working memory and cognitive abilities.
+This is an Open Source N-Back Task Game like Simply-Recall designed to improve working memory and cognitive abilities.
 
 > Open Recall is a memory improvement Game based on N-Back Task. Research shows that N-Back training may lead to gains in fluid intelligence (IQ) and working memory ability (Soveri et al., 2017).
 
@@ -15,9 +15,6 @@ You can play the game at [Open Recall On Vercel](https://open-recall.vercel.app/
 + step 1: click `start` button.
 + step 2: set game time limit and level, and click `play` button.
 + step 3: enjoy the game.
-
-> When Level = 2, you need to remember the previous two items. Suppose we have a list: Apple (n - 2), Banana (n - 1), Apple (n). Click yes because the current item is the same as the item two steps back.
-
 
 <table>
     <tr>
@@ -42,6 +39,8 @@ You can play the game at [Open Recall On Vercel](https://open-recall.vercel.app/
     </tr>
 
 </table>
+
+> When Level = 2, you need to remember the previous two items. Suppose we have a list: Apple (n - 2), Banana (n - 1), Apple (n). Click yes because the current item is the same as the item two steps back.
 
 
 ## Deploy

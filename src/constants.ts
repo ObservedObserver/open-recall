@@ -19,6 +19,7 @@ export enum IImageKey {
     sport = "sport",
     animalFace = "animalFace",
     food = "food",
+    lang = "lang",
 }
 
 export const IMAGE_PATH: { [key in IImageKey]: string[] } = {
@@ -50,5 +51,15 @@ export const IMAGE_PATH: { [key in IImageKey]: string[] } = {
         "/food/food_udon_goboten.png",
         "/food/food_pi-tan_tofu.png",
         "/food/niku_manga.png",
+    ],
+    [IImageKey.lang]: [
+        "/lang/Golang-01.svg",
+        "/lang/Python-04.svg",
+        "/lang/HTML-5-logo-vector-01.svg",
+        "/lang/c-1.svg",
+        "/lang/Java-05.svg",
+        "/lang/rust.svg",
+        "/lang/JavaScript-01.svg",
+        "/lang/scala-4.svg",
     ],
 };
