@@ -2,7 +2,7 @@
 
 # Open Recall
 
-Open Recall是一个开源的N-Back任务游戏，类似于Simply-Recall，旨在提高人脑的工作记忆(working memory)和认知能力。
+Open Recall是一个开源的N-Back任务游戏，类似于Simply-Recall(ios 可下载)，旨在提高人脑的工作记忆(working memory)和认知能力。
 
 > 研究表名N-Back训练可能会导致流体智力（IQ）和工作记忆能力（Soveri等人，2017）的提升。
 
